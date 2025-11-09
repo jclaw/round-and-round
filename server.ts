@@ -1,4 +1,5 @@
 import express from 'express';
+import { get } from 'express/lib/response';
 import socket from 'socket.io';
 
 const app = express();
@@ -19,13 +20,18 @@ const io = new socket.Server(server, {
   }
 });
 
-io.sockets.on('connection', (socket) => {
+
+const getCount = () => io.of("/").sockets.size;
+
+io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
+  io.sockets.emit('updateUserCount', { count: getCount() });
 
   socket.on('mouse', mouseMessage);
 
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
+    io.sockets.emit('updateUserCount', { count: getCount() });
   });
 
   function mouseMessage(data: { x: number; y: number }) {
