@@ -27,7 +27,16 @@ const io = new socket.Server(server, {
 io.sockets.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
 
+  socket.on('mouse', mouseMessage);
+
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
+
+  function mouseMessage(data: { x: number; y: number }) {
+    // Broadcast the mouse data to all other clients
+    socket.broadcast.emit('mouse', data);
+    console.log('Mouse data received:', data);
+  }
 });
+
