@@ -28,7 +28,7 @@ new p5((p) => {
     p.fill(0);
     p.circle(p.mouseX, p.mouseY, 20);
 
-    socketClient?.emit("mouse", { x: p.mouseX, y: p.mouseY });
+    socketClient.emit("mouse", { x: p.mouseX, y: p.mouseY });
   }
 
   function newMouseData(data: { x: number; y: number }) {
