@@ -35,7 +35,7 @@ export class Projector {
     // rotate around X by TILT: x stays same; y compresses; z becomes depth
     const y2 = y * Math.cos(TILT);
     const z = y * Math.sin(TILT);    // negative is closer before flip
-    const depth = -z;                // larger => closer
+    const depth = z;                // larger => closer
 
     // Normalize to [0..1] (0 back → 1 front)
     const depthRange = 2 * this._R * Math.sin(TILT);
@@ -43,7 +43,7 @@ export class Projector {
     const t = (depth - depthMin) / Math.max(1, depthRange);
 
     // Scale by depth
-    const size = lerp(ORB_SIZE_FRONT, ORB_SIZE_BACK, t);
+    const size = lerp(ORB_SIZE_BACK, ORB_SIZE_FRONT, t);
 
     return { x, y: y2, z, depth, t, size };
   }
