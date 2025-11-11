@@ -1,5 +1,4 @@
 import express from 'express';
-import { get } from 'express/lib/response';
 import socket from 'socket.io';
 
 const app = express();
